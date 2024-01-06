@@ -195,7 +195,7 @@ def generate_labfile(path_otoini, path_table, out_dir, tempo, notename, uta_vcv_
     # 各種ファイルの頭につける名前(音源フォルダうち単音階のフォルダ名)
     prefix = basename(dirname(path_otoini))
     # 各種ファイルの出力フォルダを作成
-    makedirs(join(out_dir, 'label_phone_align'), exist_ok=True)
+    makedirs(join(out_dir, 'lab'), exist_ok=True)
     makedirs(join(out_dir, 'label_phone_score'), exist_ok=True)
     makedirs(join(out_dir, 'ust'), exist_ok=True)
     makedirs(join(out_dir, 'wav'), exist_ok=True)
@@ -210,7 +210,7 @@ def generate_labfile(path_otoini, path_table, out_dir, tempo, notename, uta_vcv_
         ust.write(join(out_dir, 'ust', f'{prefix}{name}.ust'))
         # モノラベルを生成してファイル出力
         mono_label = generate_labelobj(otoini, table)
-        mono_label.write(join(out_dir, 'label_phone_align', f'{prefix}{name}.lab'))
+        mono_label.write(join(out_dir, 'lab', f'{prefix}{name}.lab'))
         # フルラベル生成してファイル出力
         song = up.utils.ustobj2songobj(ust, table)
         song.write(join(out_dir, 'label_phone_score', f'{prefix}{name}.lab'),
@@ -270,15 +270,15 @@ def main():
     path_table = config['table_path'].strip('\'"')
 
     # oto.iniファイルを選択してもらう
-    path_otoini = input('原音設定ファイルを指定してください。\n>>> ').strip('"')
+    path_otoini = input('Please input the path to your oto.ini file. \n原音設定ファイルを指定してください。\n>>> ').strip('"')
     if isdir(path_otoini):
         path_otoini = join(path_otoini, 'oto.ini')
 
     # 原音の収録テンポ
-    tempo = float(input('収録テンポを入力してください。\n>>> '))
+    tempo = float(input('Please input the tempo of the recording. \n収録テンポを入力してください。\n>>> '))
 
     # 最初の休符の長さ
-    pause_length = input('最初の発声までの休符の拍数を入力してください。(何も入力せずにエンターを押した場合は自動推定します。)\n>>> ')
+    pause_length = input('Specify the pause length (Will be auto estimated if left blank) \n最初の発声までの休符の拍数を入力してください。(何も入力せずにエンターを押した場合は自動推定します。)\n>>> ')
     if pause_length in ['auto', 'a', '']:
         pause_length = 'auto'
     else:
@@ -291,10 +291,10 @@ def main():
     prefix = basename(dirname(path_otoini))
     notename = guess_notename_from_prefix(prefix, NOTENAME_TO_NOTENUM_DICT)
     if notename is None:
-        notename = input('原音の音程を入力してください。\n>>> ')
+        notename = input('Please input the pitch of your Voicebank \n原音の音程を入力してください。\n>>> ')
 
     # 歌連続音かどうか
-    uta_vcv_mode = input('歌連続音ですか？[Y/y/N/n]\n>>> ')
+    uta_vcv_mode = input('Is this voicebank VCV? [Y/y/N/n]\n歌連続音ですか？[Y/y/N/n]\n>>> ')
     uta_vcv_mode = bool(uta_vcv_mode in ['Y', 'y'])
 
     # ここから本処理------------------------------------------------------------------------
@@ -304,15 +304,13 @@ def main():
     generate_labfile(path_otoini, path_table, out_dir, tempo, notename, uta_vcv_mode, pause_length)
 
     # フルラベルのコンテキストをモノラベルに写し、フルラベル化する。
-    print('Converting mono-label files to full-label files and rounding them.')
-    mono2full_and_round(
-        join(out_dir, 'label_phone_align'),
-        join(out_dir, 'label_phone_score'),
-        prefix
-    )
+    print('Saving files.')
+    join(out_dir, 'lab'),
+    join(out_dir, 'label_phone_score')
 
     # おわり
-    print(f'All files were successfully saved to {abspath(out_dir)}')
+    print(f'All files were successfully saved to {abspath(out_dir)}\n おわりで～す！'),
+    print('Please delete the label_phone_score folder in the data folder as it is not nessesary')
 
 
 if __name__ == '__main__':

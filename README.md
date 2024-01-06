@@ -1,33 +1,43 @@
-# genon2nnsvs
- UTAU音源の原音をNNSVSで学習できるようにする。
+**English** | [日本語(まだだ)](https://github.com/speedywater/genon2wavlabblob/main/README_JPN.md) | [Tiếng Việt]((https://github.com/speedywater/genon2wavlabblob/main/README_VIE.md))
 
-## 開発環境
+# Credit
 
-- Windows10
-- Python3.8
-- utaupy 開発版
-- WSL1 (Ubuntu 20.04)
+Original [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) by oatsu 
+Dictionary taken and modified from [NNSVS Japanese PLus](https://github.com/intunist/nnsvs-japanese-plus) by team Intunist
 
-## 使い方
+# genon2wavlab
+ A fork of [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) , a tool to convert UTAU voicebanks (From `.wav` and `oto.ini`) to `.lab` and `.ust` files for either NNSVS or DiffSinger
+ Modified to NOT convert the labels to full context labels (for le DiffSinger users) and has option for multible languages
+ In addition, useless stuff are removed for people that are only here to convert `oto.ini` into `.lab`
 
-### UTAU音源の前処理
+## Environment and reqirements
 
-1. UTAU音源の各音階を moresampler で原音設定しなおす。（設定：日本語VCV、連番なし、エイリアスへのprefix追加なし）
-2. [oto_estimation_checker](https://github.com/oatsu-gh/oto_estimation_checker) で原音設定ミスを検出する。手動チェックでもよい。
-3. setParam を使って原音設定ミスを直す。オーバーラップが子音開始位置、先行発声が母音開始位置となるようにする。
-4. 原音設定ファイルの右ブランクを正にする。setParamで一括変換するか、[force_otoini_cutoff_negative](https://github.com/oatsu-gh/oto2lab/tree/master/tool/force_otoini_cutoff_negative) を使う。
+Orginally made on Windows 10 and WSL1 (Ubuntu 20.04), requires Python 3.8 and above
 
-### 歌唱データベース化
+This project also requires tdqm and utaupy (1.11 and above)
+Install them with these two commands with pip by pasting them in the command line:
+```
+pip install tdqm
+pip install utaupy
+```
 
-1. **01_genon2db.py** を実行して、dataフォルダ内にlabファイルを生成し、wavファイルをコピーする。ついでにustも生成される。
-2. 多音階音源の場合、各収録音階に対して1の作業を実施する。
+## Usage
 
-### 学習準備
+### Voicebank preperation
 
-1. **02_place_files.py** を実行して、 acoustic、duration、timelag モデルの学習用フォルダに各種学習ファイルを配置する。
-2. **03_generate_train_list.py** を実行して、曲名リストのファイルを作る。（dev, eval, utt_list とか）
+You can skip step 1 and 2 if you are confident that your voicebank's OTO does not has any mistakes
+1. Re-OTO your UTAU voicebank using Moresampler (Settings: Japanese VCV, Do not number duplicates, No suffixes/Prefixes in alias)
+2. Use [oto_estimation_checker](https://github.com/oatsu-gh/oto_estimation_checker) to check for mistakes. Manual checking is OK
+3. Use **force_otoini_cutoff_negative.py** to batch convert all the Right blank (Cutoff) into negative.
 
-### 学習
+### Database conversion
 
-1. **config.yaml** を必要に応じて書き換える。
-2. **run.sh** のステージ1以降を実行する。
+1. Run **genon2wavlab.py** using the CLI (or you can simply just run **genon2wavlab.exe** from the releases) and follow the steps, the script will then generate a data folder with the `.lab`, `.wav`, and aditionally `.ust` files
+2. If your voicebank is multipitch, do step 1 for each pitch
+
+### Other
+
+1. Edit **config.yaml** if you want to use a diffirent table file (in `/dic`)
+2. You can run **force_otoini_cutoff_negative.exe** if you find the python file confusing
+3. Please delete `label_phone_score` after usage as it's not nessesary if you're making a diffsinger
+
