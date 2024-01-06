@@ -1,4 +1,4 @@
-**English** | [日本語(まだだ)](https://github.com/speedywater/genon2wavlabblob/main/README_JPN.md) | [Tiếng Việt](https://github.com/speedywater/genon2wavlabblob/main/README_VIE.md)
+**English** | [日本語(まだだ)](https://github.com/speedywater/genon2wavlab/blob/main/README_JPN.md) | [Tiếng Việt](https://github.com/speedywater/genon2wavlab/blob/main/README_VIE.md)
 
 # Credit
 
