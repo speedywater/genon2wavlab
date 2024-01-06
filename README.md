@@ -5,6 +5,10 @@
 Original [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) by oatsu 
 Dictionary taken and modified from [NNSVS Japanese PLus](https://github.com/intunist/nnsvs-japanese-plus) by team Intunist
 
+# Todos
+- [ ] Finish Japanese translation of Readme
+- [ ] Actually add an option for multilanguage
+
 # genon2wavlab
  A fork of [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) , a tool to convert UTAU voicebanks (From `.wav` and `oto.ini`) to `.lab` and `.ust` files for either NNSVS or DiffSinger
  Modified to NOT convert the labels to full context labels (for le DiffSinger users) and has option for multible languages
@@ -40,4 +44,3 @@ You can skip step 1 and 2 if you are confident that your voicebank's OTO does no
 1. Edit **config.yaml** if you want to use a diffirent table file (in `/dic`)
 2. You can run **force_otoini_cutoff_negative.exe** if you find the python file confusing
 3. Please delete `label_phone_score` after usage as it's not nessesary if you're making a diffsinger
-
