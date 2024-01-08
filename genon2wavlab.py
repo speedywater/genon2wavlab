@@ -13,7 +13,7 @@ from operator import attrgetter
 from os import makedirs
 from os.path import abspath, basename, dirname, isdir, join
 from shutil import copy
-from typing import List
+from typing import List, Tuple, Dict, Optional
 import pathlib
 
 import utaupy as up
@@ -180,7 +180,7 @@ def generate_labfile(path_otoini, path_table, out_dir, tempo, notename, uta_vcv_
     # Get the encoding of the oto.ini from OpenUtau character.yaml if exist
     # Character.yaml might appear at any parent folder of the oto.ini
     # If not found, use cp932
-    path_character_yaml: pathlib.Path | None = None
+    path_character_yaml: Optional[pathlib.Path] = None
     for parent in pathlib.Path(path_otoini).absolute().parents:
         if(parent / 'character.yaml').is_file() and (parent / 'character.txt').is_file():
             path_character_yaml = parent / 'character.yaml'
