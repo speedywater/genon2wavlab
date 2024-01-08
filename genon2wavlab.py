@@ -13,7 +13,8 @@ from operator import attrgetter
 from os import makedirs
 from os.path import abspath, basename, dirname, isdir, join
 from shutil import copy
-from typing import List
+from typing import List, Tuple, Dict, Optional
+import pathlib
 
 import utaupy as up
 import yaml
@@ -23,11 +24,11 @@ from utaupy.otoini import OtoIni
 from utaupy.ust import NOTENAME_TO_NOTENUM_DICT
 
 
-def force_otoinifile_cutoff_negative(path_otoini_in, path_otoini_out):
+def force_otoinifile_cutoff_negative(path_otoini_in, path_otoini_out, encoding='cp932'):
     """
     指定されたoto.iniを読んで、右ブランクが正の値なときはwavファイルの長さを調べて負にする。
     """
-    otoini = up.otoini.load(path_otoini_in)
+    otoini = up.otoini.load(path_otoini_in, encoding = encoding)
     voice_dir = dirname(path_otoini_in)
     if any([oto.cutoff > 0 for oto in otoini]):
         for oto in otoini:
@@ -36,7 +37,7 @@ def force_otoinifile_cutoff_negative(path_otoini_in, path_otoini_out):
             duration_ms = 1000 * sound.duration_seconds
             absolute_cutoff_position = duration_ms - oto.cutoff
             oto.cutoff = -(absolute_cutoff_position - oto.offset)
-        otoini.write(path_otoini_out)
+        otoini.write(path_otoini_out, encoding = encoding)
 
 
 def prepare_otoini(otoini: OtoIni):
@@ -176,10 +177,31 @@ def generate_labfile(path_otoini, path_table, out_dir, tempo, notename, uta_vcv_
     """
     ラベルファイルを生成する。wavファイルの複製もする。
     """
+    # Get the encoding of the oto.ini from OpenUtau character.yaml if exist
+    # Character.yaml might appear at any parent folder of the oto.ini
+    # If not found, use cp932
+    path_character_yaml: Optional[pathlib.Path] = None
+    for parent in pathlib.Path(path_otoini).absolute().parents:
+        if(parent / 'character.yaml').is_file() and (parent / 'character.txt').is_file():
+            path_character_yaml = parent / 'character.yaml'
+            break
+    oto_encoding = 'cp932'
+    if path_character_yaml is not None:
+        print(f"character.yaml found: {path_character_yaml}")
+        with open(path_character_yaml, 'r', encoding='utf-8') as f:
+            character_yaml = yaml.safe_load(f)
+            if('text_file_encoding' in character_yaml):
+                oto_encoding = character_yaml['text_file_encoding']
+                print(f"oto.ini encoding: {oto_encoding}")
+            else:
+                print(f"text_file_encoding not found in character.yaml, using cp932")
+    else:
+        print(f"character.yaml not found, using cp932")
+
     # 右ブランクを負の値で上書きする。
-    force_otoinifile_cutoff_negative(path_otoini, path_otoini)
+    force_otoinifile_cutoff_negative(path_otoini, path_otoini, encoding=oto_encoding)
     # 原音設定ファイル(oto.ini)を読み取る
-    otoini = up.otoini.load(path_otoini)
+    otoini = up.otoini.load(path_otoini, encoding=oto_encoding)
 
     # if any([oto.cutoff > 0 for oto in otoini]):
     #     raise ValueError('正の値の右ブランクがあります。setParamで修正してください。')
