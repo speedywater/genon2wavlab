@@ -1,2 +1,4 @@
 tqdm
+pydub
+pyyaml
 utaupy>=1.11
