@@ -3,21 +3,27 @@
 # Credit
 
  Code gốc là [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) do oatsu
+ 
  Từ điển được lấy và chỉnh lại từ [NNSVS Japanese PLus](https://github.com/intunist/nnsvs-japanese-plus) bởi team Intunist
 
 # genon2wavlab
- Một bản [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) được điều chỉnh lại để biến đổi Voicebank UTAU Tiếng Nhật (Bao gồm những file `.wav` và `oto.ini`) thành `.lab` và `.ust` để hỗ trợ trong việc làm Model/Voicebank cho NNSVS hay DiffSinger
- Modified to NOT convert the labels to full context labels (for le DiffSinger users) and has option for multible languages
- In addition, useless stuff are removed for people that are only here to convert `oto.ini` into `.lab`
+Một bản [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) được điều chỉnh lại để biến đổi Voicebank UTAU Tiếng Nhật (Bao gồm những file `.wav` và `oto.ini`) thành `.lab` và `.ust` để hỗ trợ trong việc làm Model/Voicebank cho NNSVS hay DiffSinger
+
+Được sửa đổi lại để output ra label bình thường thay vì full context (cho người dùng diffsinger)
+
+Có vài file được lượt bỏ từ bản gốc cho những người chỉ muốn chuyển đổi file `oto.ini` thành `.lab`
 
 ## Dependencies
 
- Script gốc được viết trên Windows 10 và WSL1 (Ubuntu 20.04), cần Python bản 3.8 trở lên
+Script gốc được viết trên Windows 10 và WSL1 (Ubuntu 20.04), cần Python bản 3.8 trở lên
 
- Script này cũng cần thêm library tdqm và utaupy (1.11 trở lên)
- Bạn có thể install với pip qua hai câu lệnh này bằng pip trong dấu nhắc lệnh (Command line):
+Script này cũng cần thêm library tdqm, pydub, pyyaml và utaupy (1.11 trở lên)
+
+Bạn có thể install với pip qua hai câu lệnh này bằng pip trong dấu nhắc lệnh (Command line):
 ```
 pip install tdqm
+pip install pydub
+pip install pyyaml
 pip install utaupy
 ```
 

@@ -3,6 +3,7 @@
 # Credit
 
 Original [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) by oatsu 
+
 Dictionary taken and modified from [NNSVS Japanese PLus](https://github.com/intunist/nnsvs-japanese-plus) by team Intunist
 
 # Todos
@@ -10,18 +11,20 @@ Dictionary taken and modified from [NNSVS Japanese PLus](https://github.com/intu
 - [ ] Actually add an option for multilanguage
 
 # genon2wavlab
- A fork of [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) , a tool to convert UTAU voicebanks (From `.wav` and `oto.ini`) to `.lab` and `.ust` files for either NNSVS or DiffSinger
- Modified to NOT convert the labels to full context labels (for le DiffSinger users) and has option for multible languages
- In addition, useless stuff are removed for people that are only here to convert `oto.ini` into `.lab`
+A fork of [genon2nnsvs](https://github.com/oatsu-gh/genon2nnsvs) , a tool to convert UTAU voicebanks (From `.wav` and `oto.ini`) to `.lab` and `.ust` files for either NNSVS or DiffSinger
+
+Modified to NOT convert the labels to full context labels (for le DiffSinger users) and has option for multible languages. In addition, useless stuff are removed for people that are only here to convert `oto.ini` into `.lab`
 
 ## Environment and reqirements
 
 Orginally made on Windows 10 and WSL1 (Ubuntu 20.04), requires Python 3.8 and above
 
-This project also requires tdqm and utaupy (1.11 and above)
+This project also requires tdqmm, pydub, pyyaml and utaupy (1.11 and above)
 Install them with these two commands with pip by pasting them in the command line:
 ```
 pip install tdqm
+pip install pydub
+pip install pyyaml
 pip install utaupy
 ```
 
