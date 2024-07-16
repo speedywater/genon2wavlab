@@ -316,8 +316,7 @@ def main():
         notename = input('Please input the pitch of your Voicebank \n原音の音程を入力してください。\n>>> ')
 
     # 歌連続音かどうか
-    uta_vcv_mode = input('Is this voicebank VCV? [Y/y/N/n]\n歌連続音ですか？[Y/y/N/n]\n>>> ')
-    uta_vcv_mode = bool(uta_vcv_mode in ['Y', 'y'])
+    uta_vcv_mode = bool(True)
 
     # ここから本処理------------------------------------------------------------------------
 
@@ -331,8 +330,9 @@ def main():
     join(out_dir, 'label_phone_score')
 
     # おわり
-    print(f'All files were successfully saved to {abspath(out_dir)}\n おわりで～す！'),
+    print(f'All files were successfully saved to {abspath(out_dir)}\n 完了しました～！'),
     print('Please delete the label_phone_score folder in the data folder as it is not nessesary')
+    print('Please check your .lab files for any problems (eg. missing last pau)')
 
 
 if __name__ == '__main__':

@@ -32,10 +32,10 @@ pip install utaupy
 
 ### Voicebank preperation
 
-You can skip step 1 and 2 if you are confident that your voicebank's OTO does not has any mistakes
-1. Re-OTO your UTAU voicebank using Moresampler (Settings: Japanese VCV, Do not number duplicates, No suffixes/Prefixes in alias)
-2. Use [oto_estimation_checker](https://github.com/oatsu-gh/oto_estimation_checker) to check for mistakes. Manual checking is OK
-3. Use **force_otoini_cutoff_negative.py** to batch convert all the Right blank (Cutoff) into negative.
+0. (Optional but recommended) Make a copy of your voicebank for conversion.
+1. **!!REQUIRED!!** Re-OTO your UTAU voicebank using Moresampler (Settings: Japanese VCV, Do not number duplicates, No suffixes/Prefixes in alias)
+2. Use [oto_estimation_checker](https://github.com/oatsu-gh/oto_estimation_checker) (Drag and drop) to check for mistakes. Manual checking is OK
+3. Use **force_otoini_cutoff_negative.py** (Run in cmd) to batch convert all the Right blank (Cutoff) into negative. 
 
 ### Database conversion
 
